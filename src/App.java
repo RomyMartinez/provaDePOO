@@ -71,7 +71,7 @@ public class App {
                         p1.acao(chefe, escolha);
                         chefe.acao(p1, escolha);
                     } else {
-                        System.out.print("\n1 - Atacar\n2 - Defender\n3 - Ataque especial(\"+ p1.getAtaqueEspecial()+\")\n4- Usar item("+ p1.getUsosDisponiveis()+ ")\n");
+                        System.out.print("\n1 - Atacar\n2 - Defender\n3 - Ataque especial("+ p1.getAtaqueEspecial()+")\n4- Usar item("+ p1.getUsosDisponiveis()+ ")\n");
                         escolha = scanner.nextInt();
                         p1.acao(chefe, escolha);
                         chefe.acao(p1, escolha);

@@ -11,11 +11,11 @@ public class Player extends Personagem{
     public void atacar(Personagem alvo) {
         if (arma instanceof Arco) {
             Arco arco = (Arco) arma;
-            arco.setFlecha(arco.getFlecha() - 1);
-            if (arco.getFlecha() == 0){
+            if (arco.getFlecha() <= 0){
                 alvo.vida -= this.dano;
                 System.out.println("Sem flechas, atacou com dano base");
             } else {
+                arco.setFlecha(arco.getFlecha() - 1);
                 alvo.vida -= (this.dano + arma.getDano());
             }
             return;
