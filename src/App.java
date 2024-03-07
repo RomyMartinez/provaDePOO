@@ -4,7 +4,7 @@ public class App {
     public static void main(String[] args) throws Exception {
         @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
-        Player p1 = new Player(null, 50, 2, 10, 2);
+        Jogador p1 = new Jogador(null, 50, 2, 10, 2);
         int escolha;
 
         System.out.print("Jogo iniciado!\n-------------------\n");
@@ -100,7 +100,7 @@ public class App {
     }
 
     //Função para gerar combate
-    public static void gerarCombate(Inimigo inimigo, Player p1, Scanner scanner){
+    public static void gerarCombate(Inimigo inimigo, Jogador p1, Scanner scanner){
         //Informar sobre o inimigo
         int escolha;
         System.out.print(inimigo.getNome() +" encontrado!\n");
@@ -143,7 +143,7 @@ public class App {
     }
 
     //Função para escolher a arma
-    public static void escolhaArma(Player p1, Scanner scanner){
+    public static void escolhaArma(Jogador p1, Scanner scanner){
         System.out.print("Escolha sua arma: ");
         System.out.print("\n1 - Espada (dano base + dano base vezes 2) \n2 - Arco (dano base vezes 3 + dano base, mas com limite de flechas, depois somente seu dano base)\n");
         int escolha = scanner.nextInt();

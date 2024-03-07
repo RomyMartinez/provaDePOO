@@ -1,9 +1,9 @@
-public class Player extends Personagem{
+public class Jogador extends Personagem{
     private Arma arma;
     private int AtaqueEspecial;
     private Item item;
 
-    public Player(String nome, int vida, int dano, int cura, int AtaqueEspecial) {
+    public Jogador(String nome, int vida, int dano, int cura, int AtaqueEspecial) {
         super(nome, vida, dano, cura);
         this.AtaqueEspecial = AtaqueEspecial;
     }

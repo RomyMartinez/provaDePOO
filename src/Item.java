@@ -1,6 +1,6 @@
 
 public interface Item {
-    public void usar(Player player);
+    public void usar(Jogador jogador);
     public int getUsosDisponiveis();
     public void setUsosDisponiveis(int usosDisponiveis);
 }
