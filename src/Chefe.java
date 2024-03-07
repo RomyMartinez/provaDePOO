@@ -2,8 +2,8 @@ import java.util.Random;
 
 public class Chefe extends Inimigo{
 
-    public Chefe(String nome, int vida, int dano, int defesa) {
-        super(nome, vida, dano, defesa);
+    public Chefe(String nome, int vida, int dano, int cura) {
+        super(nome, vida, dano, cura, "chefe");
     }
 
     public void acao(Personagem alvo, int acao) {
@@ -12,8 +12,8 @@ public class Chefe extends Inimigo{
             atacar(alvo);
             System.out.println("Chefe atacou");
         } else if (acao == 2) {
-            defender();
-            System.out.println("Chefe defendeu");
+            curar();
+            System.out.println("Chefe curou-se");
         } else if (acao == 3 || acao == 4) {
             ataquesEspecial(alvo);
             System.out.println("Chefe atacou com especial");

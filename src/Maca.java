@@ -2,7 +2,7 @@ public class Maca implements Item{
     private int usosDisponiveis = 1;
 
     public void usar(Player player) {
-        player.setDano(player.getDano() + 2);
+        player.setDano(player.getCura() + 2);
     }
 
     public int getUsosDisponiveis() {

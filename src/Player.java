@@ -3,8 +3,8 @@ public class Player extends Personagem{
     private int AtaqueEspecial;
     private Item item;
 
-    public Player(String nome, int vida, int dano, int defesa, int AtaqueEspecial) {
-        super(nome, vida, dano, defesa);
+    public Player(String nome, int vida, int dano, int cura, int AtaqueEspecial) {
+        super(nome, vida, dano, cura);
         this.AtaqueEspecial = AtaqueEspecial;
     }
 
@@ -42,19 +42,19 @@ public class Player extends Personagem{
     public void acao(Personagem alvo, int acao) {
         if(acao == 1){
             atacar(alvo);
-            System.out.println("Jogador atacou");
+            System.out.println(this.getNome() + " atacou");
         }else if(acao == 2){
-            defender();
-            System.out.println("Jogador defendeu");
+            curar();
+            System.out.println(this.getNome() + " curou-se");
         }else if(acao == 3){
             ataquesEspecial(alvo);
         } else if (acao == 4 && item != null && item instanceof Maca && item.getUsosDisponiveis() > 0){
             item.usar(this);
             item.setUsosDisponiveis(item.getUsosDisponiveis() - 1);
-            System.out.println("Jogador comeu maçã, ganhou mais 2 de dano base");
+            System.out.println(this.getNome() + " comeu maçã, ganhou mais 2 de dano base");
         } else if ( item.getUsosDisponiveis() == 0){
             System.out.println("Sem maçãs disponíveis");
-            System.out.println("Jogador perdeu o turno");
+            System.out.println(this.getNome() + " perdeu o turno");
         }
 
     }

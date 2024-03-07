@@ -1,35 +1,36 @@
 public abstract class Personagem {
     protected String nome;
-    protected int vida, dano, defesa;
+    protected int vida, dano, cura;
 
-    public Personagem(String nome, int vida, int dano, int defesa) {
+    public Personagem(String nome, int vida, int dano, int cura) {
         this.nome = nome;
         this.vida = vida;
         this.dano = dano;
-        this.defesa = defesa;
+        this.cura = cura;
     }
 
     abstract void atacar(Personagem alvo);
     abstract void ataquesEspecial(Personagem alvo);
     abstract public void acao(Personagem alvo, int acao);
 
-    public void defender() {
-        this.vida += this.defesa;
+    public void curar() {
+        this.vida += this.cura;
     }
 
     public void mostarDados() {
+        System.out.println("-------------------");
         System.out.println("Nome: " + this.nome);
         System.out.println("Vida: " + this.vida);
         System.out.println("Dano: " + this.dano);
-        System.out.print("Defesa: " + this.defesa);
+        System.out.println("Cura: " + this.cura);
     }
 
-    public int getDano() {
-        return this.dano;
+    public void setcura(int cura) {
+        this.cura = cura;
     }
 
-    public int getDefesa() {
-        return this.defesa;
+    public int getCura() {
+        return this.cura;
     }
 
     public String getNome() {
@@ -45,7 +46,7 @@ public abstract class Personagem {
     }
 
     public void setDefesa(int defesa) {
-        this.defesa = defesa;
+        this.cura = defesa;
     }
 
     public void setNome(String nome) {
