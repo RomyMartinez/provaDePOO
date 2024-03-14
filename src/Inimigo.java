@@ -25,10 +25,6 @@ public class Inimigo extends Personagem{
         alvo.vida -= this.dano;
     }
 
-    public void curar() {
-        this.vida += this.cura;;
-    }
-    
     public void ataquesEspecial(Personagem alvo) {
         alvo.vida -= this.dano * 2;
     }
@@ -44,5 +40,20 @@ public class Inimigo extends Personagem{
 
     public String getRaridade() {
         return raridade;
+    }
+
+    public Inimigo gerarInimigo() {
+        Random aleatorio = new Random();
+        int raridade = aleatorio.nextInt(11) + 1; // 1 a 11
+        //Gerar inimigo com base na raridade
+        if (raridade <= 5){ // 1, 2, 3, 4, 5
+            return new Inimigo("Goblin", 10, 2, 2, "Comun");
+        } else if (raridade > 5 && raridade <= 8){ // 6, 7, 8
+            return new Inimigo("Cobra", 15, 3, 3, "Incomun");
+        } else if (raridade > 6 && raridade <= 8){ // 9 e 10
+            return new Inimigo("Aranha", 20, 4, 4, "Incomun");
+        } else { // 11
+            return new Chefe("Chefe", 25, 5, 5);
+        }
     }
 }

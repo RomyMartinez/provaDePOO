@@ -1,21 +1,21 @@
 public class Jogador extends Personagem{
     private Arma arma;
-    private int AtaqueEspecial;
-    private Item item;
+    private int qntEspecial;
+    private Maca maca;
 
-    public Jogador(String nome, int vida, int dano, int cura, int AtaqueEspecial) {
+    public Jogador(String nome, int vida, int dano, int cura, int qntEspecial) {
         super(nome, vida, dano, cura);
-        this.AtaqueEspecial = AtaqueEspecial;
+        this.qntEspecial = qntEspecial;
     }
 
     public void atacar(Personagem alvo) {
         if (arma instanceof Arco) {
-            Arco arco = (Arco) arma;
+            Arco arco = (Arco) arma;  //casting de arma para arco.
             if (arco.getFlecha() <= 0){
                 alvo.vida -= this.dano;
                 System.out.println("Sem flechas, atacou com dano base");
             } else {
-                arco.setFlecha(arco.getFlecha() - 1);
+                arco.usar();
                 alvo.vida -= (this.dano + arma.getDano());
             }
             return;
@@ -24,19 +24,15 @@ public class Jogador extends Personagem{
     }
 
     public void ataquesEspecial(Personagem alvo) {
-        if (AtaqueEspecial == 0) {
+        if (qntEspecial == 0) {
             System.out.println("Ataque especial indisponível");
             System.out.println("Ataque normal realizado");
             atacar(alvo);
-        } else if ( AtaqueEspecial  > 0){
+        } else if ( qntEspecial  > 0){
         alvo.vida -= (this.dano * 2 + arma.getDano());
-        this.AtaqueEspecial -= 1;
+        this.qntEspecial -= 1;
         System.out.println("Jogador atacou com especial");
         }
-    }
-
-    public void equiparArma(Arma arma) {
-        this.arma = arma;
     }
 
     public void acao(Personagem alvo, int acao) {
@@ -48,11 +44,11 @@ public class Jogador extends Personagem{
             System.out.println(this.getNome() + " curou-se");
         }else if(acao == 3){
             ataquesEspecial(alvo);
-        } else if (acao == 4 && item != null && item instanceof Maca && item.getUsosDisponiveis() > 0){
-            item.usar(this);
-            item.setUsosDisponiveis(item.getUsosDisponiveis() - 1);
+        } else if (acao == 4 && maca != null && maca.getUsosDisponiveis() > 0){
+            maca.usar();
+            maca.setUsosDisponiveis(maca.getUsosDisponiveis() - 1);
             System.out.println(this.getNome() + " comeu maçã, ganhou mais 2 de dano base");
-        } else if ( item.getUsosDisponiveis() == 0){
+        } else if ( maca.getUsosDisponiveis() == 0){
             System.out.println("Sem maçãs disponíveis");
             System.out.println(this.getNome() + " perdeu o turno");
         }
@@ -60,7 +56,7 @@ public class Jogador extends Personagem{
     }
 
     public int getUsosDisponiveis() {
-        return item.getUsosDisponiveis();
+        return maca.getUsosDisponiveis();
     }
 
     public int getFlecha() {
@@ -75,21 +71,24 @@ public class Jogador extends Personagem{
         return this.arma;
     }
 
-    public void setAtaqueEspecial(int ataqueEspecial) {
-        this.AtaqueEspecial = ataqueEspecial;
+    public void setQntEspecial(int qntEspecial) {
+        this.qntEspecial = qntEspecial;
     }
 
-    public int getAtaqueEspecial() {
-        return this.AtaqueEspecial;
+    public int getQntEspecial() {
+        return this.qntEspecial;
     }
     
-    public void setItem(Item item) {
-        this.item = item;
+    public void setMaca(Maca maca) {
+        this.maca = maca;
     }
 
-    public Item getItem() {
-        return this.item;
+    public Maca getMaca() {
+        return this.maca;
     }
 
+    public void setArma(Arma arma) {
+        this.arma = arma;
+    }
     
 }

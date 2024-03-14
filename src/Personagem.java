@@ -25,10 +25,6 @@ public abstract class Personagem {
         System.out.println("Cura: " + this.cura);
     }
 
-    public void setcura(int cura) {
-        this.cura = cura;
-    }
-
     public int getCura() {
         return this.cura;
     }
@@ -41,12 +37,16 @@ public abstract class Personagem {
         return this.vida;
     }
 
+    public int getDano() {
+        return this.dano;
+    }
+
     public void setDano(int dano) {
         this.dano = dano;
     }
 
-    public void setDefesa(int defesa) {
-        this.cura = defesa;
+    public void setCura(int cura) {
+        this.cura = cura;
     }
 
     public void setNome(String nome) {

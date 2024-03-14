@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class App {
@@ -32,7 +33,7 @@ public class App {
             System.out.print("\n-------------------\n");
             
             //Gerar inimigo e combate
-            Inimigo inimigo = gerarInimigo("Goblin", "comum");
+            Inimigo inimigo = gerarInimigo(false);
             gerarCombate(inimigo, p1, scanner);
 
             //Verificar se o jogador perdeu ou ganhou
@@ -42,7 +43,7 @@ public class App {
                 //Se o jogador ganhar, ele ganha uma maçã e enfrenta o chefe
                 System.out.print(inimigo.getNome() + " derrotado!\n");
                 System.out.print("Você ganhou uma maçã!");
-                p1.setItem(new Maca());
+                p1.setMaca(new Maca(p1));
                 System.out.print("\n-------------------\n");
                 continuar(scanner);
                 
@@ -86,16 +87,22 @@ public class App {
     }
 
     //Função para gerar inimigo
-    public static Inimigo gerarInimigo(String nome, String rariade ) {
+    public static Inimigo gerarInimigo(boolean chefe) {
+        Random aleatorio = new Random();
+
+        if (chefe) {
+            return new Chefe("Chefe", 50, 7, 7);
+        }
+    
+        int raridade = aleatorio.nextInt(10) + 1; // 1 a 10
+        
         //Gerar inimigo com base na raridade
-        if (rariade == "comum") {
-            return new Inimigo(nome, 10, 2, 2, rariade);
-        } else if (rariade == "incomum") {
-            return new Inimigo(nome, 15, 3, 3, rariade);
-        } else if (rariade == "raro") {
-            return new Inimigo(nome, 20, 4, 4, rariade);
-        } else {
-            return new Chefe(nome, 25, 5, 5);
+        if (raridade <= 5){ // 1, 2, 3, 4, 5
+            return new Inimigo("Goblin", 10, 2, 2, "Comun");
+        } else if (raridade > 5 && raridade <= 8){ // 6, 7, 8
+            return new Inimigo("Cobra", 15, 3, 3, "Incomun");
+        } else { // 9, 10
+            return new Inimigo("Aranha", 20, 4, 4, "Incomun");
         }
     }
 
@@ -111,24 +118,24 @@ public class App {
         //Combate
         while (p1.getVida() > 0 && inimigo.getVida() > 0) {
                 System.out.print("Escolha sua ação: ");
-                //Verificar se o jogador tem Arco ou item, ou ambos
-                if(p1.getArma() instanceof Arco && p1.getItem() == null){
-                    System.out.print("\n1 - Atacar (flechas: " + p1.getFlecha()  + ")\n2 - Curar\n3 - Ataque especial ("+ p1.getAtaqueEspecial()+")\n");
+                //Verificar se o jogador tem Arco ou Maca, ou ambos
+                if(p1.getArma() instanceof Arco && p1.getMaca() == null){
+                    System.out.print("\n1 - Atacar (flechas: " + p1.getFlecha()  + ")\n2 - Curar\n3 - Ataque especial ("+ p1.getQntEspecial()+")\n");
                     escolha = scanner.nextInt();
                     p1.acao(inimigo, escolha);
                     inimigo.acao(p1, escolha);
-                } else if (p1.getItem() == null){
-                    System.out.print("\n1 - Atacar\n2 - Curar\n3 - Ataque especial("+ p1.getAtaqueEspecial()+")\n");
+                } else if (p1.getMaca() == null){
+                    System.out.print("\n1 - Atacar\n2 - Curar\n3 - Ataque especial("+ p1.getQntEspecial()+")\n");
                     escolha = scanner.nextInt();
                     p1.acao(inimigo, escolha);
                     inimigo.acao(p1, escolha);
                 } else if (p1.getUsosDisponiveis() > 0 && p1.getArma() instanceof Arco){
-                    System.out.print("\n1 - Atacar (flechas: " + p1.getFlecha()  + ")\n2 - Curar\n3 - Ataque especial("+ p1.getAtaqueEspecial()+")\n4 - Usar item (" + p1.getUsosDisponiveis() + ")\n");
+                    System.out.print("\n1 - Atacar (flechas: " + p1.getFlecha()  + ")\n2 - Curar\n3 - Ataque especial("+ p1.getQntEspecial()+")\n4 - Usar Maca (" + p1.getUsosDisponiveis() + ")\n");
                     escolha = scanner.nextInt();
                     p1.acao(inimigo, escolha);
                     inimigo.acao(p1, escolha);
                 } else {
-                    System.out.print("\n1 - Atacar\n2 - Curar\n3 - Ataque especial("+ p1.getAtaqueEspecial()+")\n4 - Usar item (" + p1.getUsosDisponiveis() + ")\n");
+                    System.out.print("\n1 - Atacar\n2 - Curar\n3 - Ataque especial("+ p1.getQntEspecial()+")\n4 - Usar Maca (" + p1.getUsosDisponiveis() + ")\n");
                     escolha = scanner.nextInt();
                     p1.acao(inimigo, escolha);
                     inimigo.acao(p1, escolha);
@@ -148,10 +155,10 @@ public class App {
         System.out.print("\n1 - Espada (dano base + dano base vezes 2) \n2 - Arco (dano base vezes 3 + dano base, mas com limite de flechas, depois somente seu dano base)\n");
         int escolha = scanner.nextInt();
         if (escolha == 1) {
-            p1.equiparArma(new Espada(p1.dano));
+            p1.setArma(new Espada(p1.dano));
             System.out.println("Espada equipada");
         } else if (escolha == 2) {
-            p1.equiparArma(new Arco(p1.dano*3, 5));
+            p1.setArma(new Arco(p1.dano, 5));
             System.out.println("Arco equipado com "+ p1.getFlecha() +" flechas");
         }
     }
