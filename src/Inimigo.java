@@ -42,18 +42,22 @@ public class Inimigo extends Personagem{
         return raridade;
     }
 
-    public Inimigo gerarInimigo() {
+    public static Inimigo gerarInimigo(boolean chefe) {
         Random aleatorio = new Random();
-        int raridade = aleatorio.nextInt(11) + 1; // 1 a 11
+
+        if (chefe) {
+            return new Chefe("Chefe", 50, 7, 7);
+        }
+    
+        int raridade = aleatorio.nextInt(10) + 1; // 1 a 10
+        
         //Gerar inimigo com base na raridade
         if (raridade <= 5){ // 1, 2, 3, 4, 5
             return new Inimigo("Goblin", 10, 2, 2, "Comun");
         } else if (raridade > 5 && raridade <= 8){ // 6, 7, 8
             return new Inimigo("Cobra", 15, 3, 3, "Incomun");
-        } else if (raridade > 6 && raridade <= 8){ // 9 e 10
+        } else { // 9, 10
             return new Inimigo("Aranha", 20, 4, 4, "Incomun");
-        } else { // 11
-            return new Chefe("Chefe", 25, 5, 5);
         }
     }
 }

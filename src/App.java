@@ -33,7 +33,7 @@ public class App {
             System.out.print("\n-------------------\n");
             
             //Gerar inimigo e combate
-            Inimigo inimigo = gerarInimigo(false);
+            Inimigo inimigo = Inimigo.gerarInimigo(false);
             gerarCombate(inimigo, p1, scanner);
 
             //Verificar se o jogador perdeu ou ganhou
@@ -48,7 +48,7 @@ public class App {
                 continuar(scanner);
                 
                 //Combate com o chefe
-                Chefe chefe = new Chefe("Chefe", 50, 7, 7);
+                Chefe chefe = (Chefe) Inimigo.gerarInimigo(true);
                 gerarCombate(chefe, p1, scanner);
 
                 //Verificar se o jogador perdeu ou ganhou
@@ -64,19 +64,56 @@ public class App {
             System.out.print("\n-------------------\n");
             
             //Gerar chefe e combate
-            Chefe chefe = new Chefe("Chefe", 50, 7, 7);
-            gerarCombate(chefe, p1, scanner);
+            Inimigo inimigo = Inimigo.gerarInimigo(false);
+            gerarCombate(inimigo, p1, scanner);
             
             //Verificar se o jogador perdeu ou ganhou
             if (p1.getVida() <= 0) {
                 System.out.print("Você perdeu!\n");
-            } else if (chefe.getVida() <= 0) {
-                System.out.print("Você venceu o jogo!\n");
+            } else if (inimigo.getVida() <= 0) {
+                System.out.print(inimigo.getNome() + " derrotado!\n");
+                inimigo = Inimigo.gerarInimigo(false);
+                System.out.print("1- Enfrentar o chefe\n2- " + inimigo.getNome() + " para ganhar um objeto\n");
+                escolha = scanner.nextInt();
+                if (escolha == 1) {
+                    //Combate com o chefe
+                    Chefe chefe = (Chefe) Inimigo.gerarInimigo(true);
+                    gerarCombate(chefe, p1, scanner);
+                    //Verificar se o jogador perdeu ou ganhou
+                    if (p1.getVida() <= 0) {
+                        System.out.print("Você perdeu!\n");
+                    } else if (chefe.getVida() <= 0) {
+                        System.out.print("Você venceu o jogo!\n");
+                    }
+                } else if (escolha == 2) {
+                    //Combate com inimigo para ganhar um objeto
+                    gerarCombate(inimigo, p1, scanner);
+                    //Verificar se o jogador perdeu ou ganhou
+                    if (p1.getVida() <= 0) {
+                        System.out.print("Você perdeu!\n");
+                    } else if (inimigo.getVida() <= 0) {
+                        System.out.print(inimigo.getNome() + " derrotado!\n");
+                        System.out.print("Você ganhou uma maçã!");
+                        p1.setMaca(new Maca(p1));
+                        System.out.print("\n-------------------\n");
+                        continuar(scanner);
+                        //Combate com o chefe
+                        Chefe chefe = (Chefe) Inimigo.gerarInimigo(true);
+                        gerarCombate(chefe, p1, scanner);
+                        //Verificar se o jogador perdeu ou ganhou
+                        if (p1.getVida() <= 0) {
+                            System.out.print("Você perdeu!\n");
+                        } else if (chefe.getVida() <= 0) {
+                            System.out.print("Você venceu o jogo!\n");
+                        }
+                    }
+                }
             }
         }
     }
 
     //Função para limpar o terminal e continuar
+    
     private static void continuar(Scanner scanner) {
         @SuppressWarnings("unused")
         String continuar = "";
@@ -87,24 +124,7 @@ public class App {
     }
 
     //Função para gerar inimigo
-    public static Inimigo gerarInimigo(boolean chefe) {
-        Random aleatorio = new Random();
-
-        if (chefe) {
-            return new Chefe("Chefe", 50, 7, 7);
-        }
     
-        int raridade = aleatorio.nextInt(10) + 1; // 1 a 10
-        
-        //Gerar inimigo com base na raridade
-        if (raridade <= 5){ // 1, 2, 3, 4, 5
-            return new Inimigo("Goblin", 10, 2, 2, "Comun");
-        } else if (raridade > 5 && raridade <= 8){ // 6, 7, 8
-            return new Inimigo("Cobra", 15, 3, 3, "Incomun");
-        } else { // 9, 10
-            return new Inimigo("Aranha", 20, 4, 4, "Incomun");
-        }
-    }
 
     //Função para gerar combate
     public static void gerarCombate(Inimigo inimigo, Jogador p1, Scanner scanner){
