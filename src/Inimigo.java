@@ -42,6 +42,8 @@ public class Inimigo extends Personagem{
         return raridade;
     }
 
+    //Função para gerar inimigo
+
     public static Inimigo gerarInimigo(boolean chefe) {
         Random aleatorio = new Random();
 

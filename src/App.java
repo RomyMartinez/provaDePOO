@@ -123,9 +123,6 @@ public class App {
         limparTerminal();
     }
 
-    //Função para gerar inimigo
-    
-
     //Função para gerar combate
     public static void gerarCombate(Inimigo inimigo, Jogador p1, Scanner scanner){
         //Informar sobre o inimigo
